@@ -1,4 +1,9 @@
-# Photo credits
+# Photo credits and image licence
+
+**The MIT licence in `LICENSE` covers the code and the documentation only. It does not cover these
+photographs.** They are third-party works under their own licences, listed below, and the
+attribution here is the licence record: keep this file with the images. If you replace the images
+with your own, replace this file too.
 
 All photographs are from Wikimedia Commons under licences that permit commercial reuse.
 This file is the canonical attribution record: it lives in the repository, and the site

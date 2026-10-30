@@ -24,7 +24,7 @@ export const CHANGELOG: ChangeEntry[] = [
     kind: 'feature',
     area: 'Address',
     summary:
-      'The demo is reachable at example.com as well as example.com. Zscaler classifies the jaeger domain as professional services and the zxc one as miscellaneous, which puts it behind browser isolation — share the jaeger address with anyone on a managed network.',
+      'The demo answers on a second hostname. A managed network can classify one custom domain as professional services and another as miscellaneous, which puts the second behind browser isolation and makes the demo look broken to anyone inside a corporate proxy. Attaching a second domain is cheaper than arguing with the category: hand out whichever address loads on their network.',
     env: 'preview',
   },
   {

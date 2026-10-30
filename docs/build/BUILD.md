@@ -137,6 +137,28 @@ Write down, for the SE:
 
 ---
 
+## Hosting notes that cost time
+
+**A managed network can put your demo behind browser isolation.** One custom domain gets classified
+as professional services, another as miscellaneous, and the second one is isolated: the page loads
+in a remote browser and the demo looks broken to the person you sent it to. The fix is a second
+hostname, not an argument about the category. Attach both and hand out whichever loads on their
+network.
+
+**Two ways to own a hostname, and they behave differently.** A route declared in `wrangler.toml`
+means every deploy needs DNS permission, so a token without DNS write fails a deploy that should
+have been a code change. A hostname attached once, out of band, survives `wrangler deploy` on its
+own. Pick deliberately:
+
+- production hostname: attach once, leave it out of `wrangler.toml`
+- preview hostname: declare it in the `[env.preview]` block so a deploy owns it
+
+**Workers AI and the guard are separate bills.** The guard inspects, the model answers, and both are
+metered. At demo volumes it is trivial, but say the number rather than "cheap" when you ask for
+permission to deploy.
+
+---
+
 ## Failure modes, in the order they bite
 
 | Symptom | Cause | Check |

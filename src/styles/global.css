@@ -1,0 +1,1110 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--text);
+  background: var(--gov-white);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--lh-tight);
+  margin: 0 0 var(--space-3);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+h4 { font-size: var(--fs-md); }
+
+p { margin: 0 0 var(--space-4); }
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+a:hover { text-decoration-thickness: 2px; }
+
+ul, ol { margin: 0 0 var(--space-4); padding-left: 1.4em; }
+li { margin-bottom: var(--space-2); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 var(--space-5);
+  font-size: var(--fs-sm);
+}
+
+th, td {
+  text-align: left;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  font-weight: 700;
+  background: var(--accent-tint);
+  border-bottom: 2px solid var(--border-strong);
+}
+
+code, pre {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+code {
+  background: var(--gov-grey-04);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius);
+}
+
+pre {
+  background: var(--gov-grey-04);
+  padding: var(--space-4);
+  overflow-x: auto;
+  border-radius: var(--radius);
+}
+
+/* --- focus: visible, for WCAG 2.2 AA --- */
+:focus-visible {
+  outline: 3px solid var(--gov-orange);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--gov-navy);
+  color: white;
+  padding: var(--space-3) var(--space-4);
+  z-index: 200;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Demo chrome — mandatory on every page (plan §5.3)
+   -------------------------------------------------------------------------- */
+
+.demo-banner {
+  background: var(--gov-black);
+  color: var(--gov-white);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  padding: var(--space-2) var(--space-4);
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.demo-banner strong {
+  color: var(--gov-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.demo-banner__mark {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 0.1em 0.5em;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.demo-badge {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 90;
+  background: var(--gov-black);
+  color: var(--gov-white);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+}
+
+.site-footer__demo {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: var(--gov-white);
+}
+
+.site-header__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+/* Lead logo top-left — the government style palette convention for the delivering entity. */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand__name {
+  font-weight: 700;
+  font-size: var(--fs-md);
+  line-height: 1.2;
+}
+
+.brand__abbr {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.site-nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  padding: var(--space-2) 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current='page'] {
+  border-bottom-color: var(--accent);
+}
+
+.site-main {
+  flex: 1;
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-4);
+}
+
+.site-main--narrow {
+  max-width: 780px;
+}
+
+.site-footer {
+  background: var(--gov-grey-04);
+  border-top: 1px solid var(--border);
+  padding: var(--space-6) var(--space-4);
+  font-size: var(--fs-sm);
+}
+
+.site-footer__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.site-footer a { color: var(--accent); }
+
+.site-footer__links {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Components
+   -------------------------------------------------------------------------- */
+
+.hero {
+  background: var(--accent-tint);
+  border-left: 6px solid var(--accent);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.hero h1 { max-width: 26ch; }
+.hero p { max-width: 60ch; margin-bottom: 0; }
+
+.lede {
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+  max-width: 68ch;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  margin-bottom: var(--space-6);
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  padding: var(--space-5);
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+  background: var(--gov-white);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.card h3 { font-size: var(--fs-base); margin-bottom: var(--space-2); }
+.card p { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+
+.notice {
+  border-left: 4px solid var(--gov-grey-11);
+  background: var(--gov-grey-04);
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  font-size: var(--fs-sm);
+}
+
+.notice--warn {
+  border-left-color: var(--gov-orange);
+  background: var(--gov-orange-08);
+}
+
+.notice--bad {
+  border-left-color: var(--gov-red);
+  background: var(--gov-red-08);
+}
+
+.notice--info {
+  border-left-color: var(--gov-blue);
+  background: var(--gov-blue-08);
+}
+
+.notice p:last-child { margin-bottom: 0; }
+
+.pill {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15em 0.5em;
+  border-radius: var(--radius);
+  background: var(--gov-grey-04);
+  color: var(--text-muted);
+}
+
+.pill--ok { background: #e3f2e8; color: var(--ok); }
+.pill--warn { background: #fdf0d9; color: var(--warn); }
+.pill--bad { background: var(--gov-red-08); color: var(--bad); }
+.pill--info { background: var(--gov-blue-08); color: var(--gov-blue); }
+
+.btn {
+  font: inherit;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  padding: var(--space-3) var(--space-5);
+  border: 2px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn:hover { filter: brightness(1.12); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn--secondary {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.stack > * + * { margin-top: var(--space-4); }
+
+.muted { color: var(--text-muted); }
+.small { font-size: var(--fs-sm); }
+.tiny { font-size: var(--fs-xs); }
+
+/* Breadcrumbs */
+.breadcrumb {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+
+.breadcrumb a { color: var(--text-muted); }
+
+/* --------------------------------------------------------------------------
+   Chat
+   -------------------------------------------------------------------------- */
+
+.chat {
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: min(70vh, 720px);
+  background: var(--gov-white);
+}
+
+.chat__head {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--accent-tint);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.chat__head h2 {
+  margin: 0;
+  font-size: var(--fs-md);
+}
+
+.chat__log {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.msg {
+  max-width: 80ch;
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+}
+
+.msg--user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: white;
+}
+
+.msg--assistant {
+  background: var(--gov-grey-04);
+}
+
+.msg--blocked {
+  background: var(--gov-red-08);
+  border-left: 4px solid var(--gov-red);
+}
+
+.msg--error {
+  background: var(--gov-orange-08);
+  border-left: 4px solid var(--gov-orange);
+}
+
+.msg__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2);
+  opacity: 0.8;
+}
+
+.msg p:last-child { margin-bottom: 0; }
+.msg table { font-size: var(--fs-xs); margin-bottom: var(--space-3); }
+.msg pre { font-size: var(--fs-xs); }
+
+.chat__composer {
+  border-top: 1px solid var(--border);
+  padding: var(--space-4);
+  display: flex;
+  gap: var(--space-3);
+}
+
+.chat__composer textarea {
+  flex: 1;
+  font: inherit;
+  font-size: var(--fs-sm);
+  padding: var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  resize: vertical;
+  min-height: 68px;
+}
+
+.chat__suggestions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--gov-white);
+}
+
+.suggestion {
+  font: inherit;
+  font-size: var(--fs-xs);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-strong);
+  background: var(--gov-white);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--text);
+  text-align: left;
+}
+
+.suggestion:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-tint); }
+
+.suggestion:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.chat textarea:disabled {
+  background: var(--gov-grey-04);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.chat__head--slim {
+  justify-content: flex-end;
+  background: var(--gov-grey-04);
+  padding: var(--space-2) var(--space-4);
+}
+
+.suggestion__note {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  margin-top: 2px;
+}
+
+/* Verdict strip under each answer */
+.verdict {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: var(--fs-xs);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  color: var(--text-muted);
+}
+
+.verdict__mode {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Console
+
+   The operator console is the control plane for the site being demoed, so it uses
+   the same foundation as the two websites: the same palette tokens, the same
+   Arial/fluent type scale, white panels on a light ground, and the site accent for
+   its masthead. It used to be a dark terminal-style tool, which read as a third
+   product and made every switch to it feel like leaving the demo.
+   -------------------------------------------------------------------------- */
+
+.console {
+  background: #f4f4f2;
+  color: var(--text);
+  min-height: 100vh;
+  font-size: var(--fs-sm);
+}
+
+.console a {
+  color: var(--accent);
+}
+
+.console__bar {
+  background: var(--accent);
+  border-bottom: 4px solid color-mix(in srgb, var(--gov-black) 18%, var(--accent));
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.console__title {
+  font-weight: 700;
+  margin: 0;
+  font-size: var(--fs-md);
+  color: var(--gov-white);
+}
+
+.console__nav {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.console__nav a {
+  color: color-mix(in srgb, var(--gov-white) 88%, transparent);
+  text-decoration: none;
+  font-size: var(--fs-xs);
+  padding: var(--space-1) 0;
+  border-bottom: 2px solid transparent;
+}
+
+.console__nav a[aria-current='page'],
+.console__nav a:hover {
+  color: var(--gov-white);
+  border-bottom-color: var(--gov-white);
+}
+
+.console__main {
+  padding: var(--space-5);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.console__panel {
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.console__panel h2 {
+  font-size: var(--fs-md);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--gov-navy);
+  margin: 0 0 var(--space-3);
+}
+
+.console summary {
+  color: var(--gov-grey-11);
+}
+
+.console table {
+  font-size: var(--fs-xs);
+}
+
+.console th {
+  background: #f4f4f2;
+  color: var(--gov-grey-11);
+  border-bottom: 1px solid var(--border-strong);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+}
+
+.console td {
+  border-bottom-color: var(--border);
+}
+
+.console .pill {
+  background: var(--gov-grey-04);
+  color: var(--gov-grey-11);
+}
+.console .pill--ok {
+  background: #e6f2ea;
+  color: #1f7a3d;
+}
+.console .pill--bad {
+  background: #fbeaea;
+  color: #a3171f;
+}
+.console .pill--warn {
+  background: #fdf1dc;
+  color: #8a5a00;
+}
+
+/* Masthead furniture sits on the accent bar, so it needs light-on-dark. */
+.console .mode-indicator {
+  color: var(--gov-white);
+  border-color: color-mix(in srgb, var(--gov-white) 45%, transparent);
+}
+
+.stat-row {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  margin-bottom: var(--space-4);
+}
+
+.stat {
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat__value {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--gov-navy);
+  line-height: 1.1;
+}
+
+.stat__label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gov-grey-11);
+  margin-top: var(--space-1);
+}
+
+/* Shared by the sites and the console — do not redeclare per theme. */
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.mode-indicator {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+}
+
+.mode-indicator--live {
+  color: #1f7a3d;
+}
+
+.mode-indicator--unconfigured {
+  color: #8a5a00;
+}
+
+/* On the accent bar the same pill must read light-on-dark. */
+.console .mode-indicator--live,
+.console .mode-indicator--unconfigured {
+  color: var(--gov-white);
+  border-color: color-mix(in srgb, var(--gov-white) 45%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Gate
+   -------------------------------------------------------------------------- */
+
+.gate {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--gov-navy);
+  padding: var(--space-4);
+}
+
+.gate__card {
+  background: white;
+  padding: var(--space-7);
+  max-width: 420px;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.gate__card h1 { font-size: var(--fs-lg); }
+
+.gate input {
+  width: 100%;
+  font: inherit;
+  padding: var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .site-main { padding: var(--space-5) var(--space-4); }
+  .hero { padding: var(--space-5); }
+  .chat { height: 78vh; }
+  .site-nav { margin-left: 0; width: 100%; }
+}
+
+
+/* --------------------------------------------------------------------------
+   Public assistant dock — persistent launcher, bottom right
+   -------------------------------------------------------------------------- */
+
+.dock__launcher {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 95;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: var(--space-3) var(--space-5);
+  border: none;
+  border-radius: 100px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+}
+
+.dock__launcher:hover { filter: brightness(1.1); }
+.dock__launcher span[aria-hidden] { font-size: 1.25rem; line-height: 1; }
+
+.dock__panel {
+  position: fixed;
+  right: var(--space-5);
+  bottom: calc(var(--space-5) + 64px);
+  z-index: 96;
+  width: min(440px, calc(100vw - 2 * var(--space-4)));
+  height: min(72vh, 640px);
+  background: var(--gov-white);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dock__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--accent-tint);
+  border-bottom: 1px solid var(--border);
+}
+
+.dock__close {
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0 var(--space-1);
+}
+
+.dock__disclose {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--gov-grey-04);
+}
+
+.chat--dock {
+  height: 100%;
+  min-height: 0;
+  border: none;
+  flex: 1;
+}
+
+.chat--dock .chat__suggestions {
+  max-height: 30%;
+  overflow-y: auto;
+  padding: var(--space-3);
+}
+
+.chat--dock .chat__log { padding: var(--space-3); }
+.chat--dock .chat__composer { padding: var(--space-3); }
+.chat--dock .chat__composer textarea { min-height: 52px; }
+
+/* --------------------------------------------------------------------------
+   Staff portal
+   -------------------------------------------------------------------------- */
+
+.staff-bar {
+  background: var(--gov-navy);
+  color: white;
+  font-size: var(--fs-xs);
+  padding: var(--space-2) var(--space-4);
+}
+
+.staff-bar__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.staff-bar a,
+.staff-bar button {
+  color: #cfe1ff;
+  background: transparent;
+  border: none;
+  font: inherit;
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.staff-card {
+  border: 1px solid var(--border);
+  background: var(--gov-white);
+  padding: var(--space-6);
+  max-width: 520px;
+}
+
+.staff-card h1 { font-size: var(--fs-lg); }
+
+.staff-card input {
+  width: 100%;
+  font: inherit;
+  padding: var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+}
+
+.staff-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+
+/* --------------------------------------------------------------------------
+   AI Guard demonstration switch (in the header banner)
+   -------------------------------------------------------------------------- */
+
+.guard-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.guard-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.guard-switch__track {
+  position: relative;
+  width: 38px;
+  height: 20px;
+  flex: none;
+  border-radius: 100px;
+  background: #3a3f47;
+  transition: background 0.15s ease;
+}
+
+.guard-switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--gov-white);
+  transition: transform 0.15s ease;
+}
+
+.guard-switch input:checked + .guard-switch__track {
+  background: #1f7a3d;
+}
+
+.guard-switch input:checked + .guard-switch__track .guard-switch__thumb {
+  transform: translateX(18px);
+}
+
+.guard-switch input:disabled + .guard-switch__track {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.guard-switch input:focus-visible + .guard-switch__track {
+  outline: 3px solid var(--gov-orange);
+  outline-offset: 2px;
+}
+
+.guard-switch__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.guard-switch__label strong {
+  color: #6ee7a0;
+}
+
+/* Off state must be unmistakable — a presenter who forgets it is off would
+   otherwise show an uninspected answer to a customer. */
+.demo-banner--off {
+  background: var(--gov-red);
+}
+
+.demo-banner--off strong,
+.demo-banner--off .guard-switch__label strong {
+  color: var(--gov-white);
+}
+
+.demo-banner__warn {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--gov-black);
+  color: var(--gov-white);
+  padding: 0.2em 0.6em;
+  border-radius: var(--radius);
+  white-space: nowrap;
+}
+
+
+/* --------------------------------------------------------------------------
+   Chat toolbar — presenter scaffolding, always reachable
+   -------------------------------------------------------------------------- */
+
+.chat__tools {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--bv-white);
+  flex-wrap: wrap;
+}
+
+.tool {
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3em 0.65em;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tool:hover { border-color: var(--accent); color: var(--accent); }
+
+.tool--on {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Dock: head actions and maximised state
+   -------------------------------------------------------------------------- */
+
+.dock__head-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.dock__icon {
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dock__icon:hover {
+  background: var(--bv-grey-04);
+  color: var(--text);
+}
+
+.dock__panel--max {
+  inset: var(--space-4);
+  right: var(--space-4);
+  bottom: var(--space-4);
+  width: auto;
+  height: auto;
+  max-width: none;
+}
+
+.dock__panel--max .chat--dock .chat__log {
+  font-size: var(--fs-base);
+}

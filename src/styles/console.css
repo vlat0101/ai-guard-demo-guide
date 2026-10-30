@@ -1,0 +1,243 @@
+/*
+ * Operator console — decision rows.
+ *
+ * Built on the same tokens as the two public sites so the console reads as the
+ * control plane for the site being demoed rather than a third product: white
+ * panels, government palette, Arial, the site accent in the masthead.
+ *
+ * Colour is never the only cue. Every verdict has a word in a pill and a coloured
+ * left edge, because a projector washes tints out and colour-blind presenters need
+ * the label anyway.
+ */
+
+.console .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+}
+
+/* ---------- decision rows ---------- */
+
+.decisions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: var(--space-3);
+}
+
+.dec {
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.dec--allow {
+  border-left-color: var(--ok);
+}
+.dec--block {
+  border-left-color: var(--bad);
+}
+.dec--flag {
+  border-left-color: var(--gov-orange);
+}
+.dec--error {
+  border-left-color: var(--gov-grey-11);
+}
+
+.dec > summary {
+  display: grid;
+  grid-template-columns: 6.5rem 9rem 5.5rem 1fr 6rem 5rem;
+  gap: var(--space-3);
+  align-items: center;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--fs-xs);
+}
+
+.dec > summary::-webkit-details-marker {
+  display: none;
+}
+
+.dec > summary:hover {
+  background: #f7f7f5;
+}
+
+.dec[open] {
+  box-shadow: var(--shadow-sm);
+}
+
+.dec[open] > summary {
+  background: var(--accent-tint);
+  border-bottom: 1px solid var(--border);
+}
+
+.dec__time,
+.dec__app,
+.dec__lat {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--gov-grey-11);
+}
+
+.dec__preview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.dec__chev {
+  color: var(--gov-grey-11);
+  font-size: 0.6875rem;
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dec__body {
+  padding: var(--space-4) 0.85rem var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+  background: #fbfbfa;
+}
+
+.dec__section h3 {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gov-grey-11);
+  margin: 0 0 0.35rem;
+}
+
+.dec__text {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border-strong);
+  border-radius: var(--radius);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 20rem;
+  overflow-y: auto;
+  color: var(--text);
+}
+
+.dec__text--withheld {
+  border-left-color: var(--bad);
+  background: #fdf7f7;
+  color: color-mix(in srgb, var(--text) 75%, white);
+  font-style: italic;
+}
+
+.dec__meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem 1rem;
+  margin: 0;
+}
+
+.dec__meta dt {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gov-grey-11);
+}
+
+.dec__meta dd {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+/* ---------- detector table ---------- */
+
+.detectors {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+}
+
+.detectors th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gov-grey-11);
+  padding: 0.3rem 0.55rem;
+  background: #f4f4f2;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.detectors td {
+  padding: 0.3rem 0.55rem;
+  border-bottom: 1px solid var(--border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--text);
+}
+
+.detectors tr:last-child td {
+  border-bottom: none;
+}
+
+.detectors .act--BLOCK {
+  color: var(--bad);
+  font-weight: 700;
+}
+
+.detectors .act--DETECT {
+  color: #8a5a00;
+  font-weight: 700;
+}
+
+.detectors .act--ALLOW {
+  color: #1f7a3d;
+}
+
+/* ---------- verdict pills ----------
+ *
+ * These must be scoped to `.console` — the base `.console .pill` rule in global.css is
+ * (0,2,0), so a bare `.pill--block` (0,1,0) loses and every verdict renders grey. That
+ * is what the first screenshot showed: BLOCK, FLAG and ALLOW all the same grey chip.
+ */
+
+.console .pill--allow {
+  background: #e6f2ea;
+  color: #1f7a3d;
+  border-color: #b9d9c4;
+}
+
+.console .pill--block {
+  background: var(--bad);
+  color: var(--gov-white);
+  border-color: color-mix(in srgb, var(--gov-black) 20%, var(--bad));
+}
+
+.console .pill--flag {
+  background: var(--gov-orange);
+  color: #3a2c00;
+  border-color: color-mix(in srgb, var(--gov-black) 20%, var(--gov-orange));
+}
+
+.console .pill--error {
+  background: var(--gov-grey-11);
+  color: var(--gov-white);
+}
+
+
+/* Latency attribution under the row figure: guard vs model. Small, monospaced, and
+   subordinate to the round trip so the row still reads at a glance. */
+.dec__split {
+  display: block;
+  font-size: 0.625rem;
+  color: var(--gov-grey-11);
+  letter-spacing: 0.01em;
+}

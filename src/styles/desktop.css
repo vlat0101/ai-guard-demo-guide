@@ -1,0 +1,863 @@
+/**
+ * Shadow-AI desktop: a simulated Windows-style desktop with a browser window
+ * open on a public LLM.
+ *
+ * This is deliberately the only surface in the estate that does NOT use the
+ * government palette. It is not a government website — it is a person's own
+ * machine — so it must look and feel unlike the two sites. Palette here is
+ * neutral desktop greys plus the invented Natter brand colour.
+ *
+ * No Microsoft wallpaper, icon set or font is reproduced. The wallpaper is a
+ * generated gradient; the icons are text glyphs; the type stays Arial.
+ */
+
+.desk {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #0b1020;
+}
+
+.desk__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Generated wallpaper — abstract, not anyone's corporate art. */
+.desk__wallpaper {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(62% 58% at 18% 22%, rgba(58, 134, 255, 0.85), transparent 70%),
+    radial-gradient(54% 52% at 82% 16%, rgba(0, 214, 236, 0.62), transparent 70%),
+    radial-gradient(68% 64% at 66% 88%, rgba(146, 82, 255, 0.70), transparent 72%),
+    radial-gradient(40% 40% at 8% 92%, rgba(255, 138, 76, 0.28), transparent 70%),
+    linear-gradient(158deg, #121c44 0%, #152049 46%, #0a1024 100%);
+}
+
+/* Desktop icons, top left. */
+.desk__icons {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.desk__icon {
+  width: 78px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 11px;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.desk__icon-glyph {
+  font-size: 26px;
+  line-height: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Browser window
+   --------------------------------------------------------------------------- */
+
+.brw {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1120px, 90vw);
+  /* Leave room for the taskbar, which is pinned to the bottom of the stage. */
+  height: min(780px, calc(100% - 92px));
+  top: calc(50% - 23px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 2px 0 rgba(255, 255, 255, 0.12) inset;
+  background: #f3f3f3;
+  font-family: var(--font-sans);
+}
+
+.brw__titlebar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  background: #dfe3e8;
+  padding: 6px 0 0 8px;
+  flex: 0 0 auto;
+}
+
+.brw__tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  min-width: 0;
+}
+
+.brw__tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 8px 8px 0 0;
+  font-size: 12px;
+  color: #3a3f45;
+  max-width: 260px;
+}
+
+.brw__tab--active {
+  background: #fff;
+  color: #14181d;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.brw__tab--idle {
+  background: rgba(255, 255, 255, 0.42);
+  color: #5a6069;
+}
+
+.brw__tab-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brw__favicon {
+  color: #0f9d8f;
+  font-size: 11px;
+}
+
+.brw__favicon--idle {
+  color: #7c838c;
+}
+
+.brw__tab-close {
+  font-size: 14px;
+  color: #6b7178;
+  margin-left: 2px;
+}
+
+.brw__newtab {
+  font-size: 15px;
+  color: #4b5158;
+  padding: 0 8px 6px;
+}
+
+.brw__controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 0 14px 8px;
+  font-size: 12px;
+  color: #4b5158;
+}
+
+.brw__close:hover {
+  color: #c0392b;
+}
+
+.brw__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  padding: 7px 10px;
+  border-bottom: 1px solid #e3e5e8;
+  flex: 0 0 auto;
+}
+
+.brw__nav {
+  font-size: 14px;
+  color: #5a6069;
+  width: 22px;
+  text-align: center;
+}
+
+.brw__address {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #f1f3f4;
+  border: 1px solid #e3e5e8;
+  border-radius: 999px;
+  padding: 5px 12px;
+  min-width: 0;
+}
+
+.brw__lock {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.brw__url {
+  font-size: 12.5px;
+  color: #202124;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brw__bookmarks {
+  display: flex;
+  gap: 16px;
+  padding: 5px 14px;
+  background: #fff;
+  border-bottom: 1px solid #e3e5e8;
+  font-size: 11.5px;
+  color: #4b5158;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.brw__viewport {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Block page — corporate policy block, not a model refusal
+   --------------------------------------------------------------------------- */
+
+.blk {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.blk__inner {
+  max-width: 560px;
+  padding: 56px 28px;
+}
+
+.blk__brand {
+  margin: 0 0 18px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a9199;
+  font-weight: 700;
+}
+
+.blk h1 {
+  margin: 0 0 10px;
+  font-size: 26px;
+  color: #1b1f23;
+  letter-spacing: -0.01em;
+}
+
+.blk__lede {
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #3c4249;
+}
+
+.blk__meta {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px 12px;
+  margin: 0 0 22px;
+  padding: 16px;
+  border: 1px solid #e3e5e8;
+  border-left: 4px solid #b3261e;
+  background: #fafafa;
+  font-size: 13px;
+}
+
+.blk__meta dt {
+  color: #6b7178;
+  font-weight: 700;
+}
+
+.blk__meta dd {
+  margin: 0;
+  color: #1b1f23;
+}
+
+.blk__foot {
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5a6069;
+}
+
+.blk .btn {
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Natter — the public LLM. Layout homage only: invented name and mark.
+   --------------------------------------------------------------------------- */
+
+.nt {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 236px 1fr;
+  background: #fff;
+  color: #14181d;
+}
+
+.nt__side {
+  background: #f7f7f8;
+  border-right: 1px solid #e6e6e8;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.nt__new {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  padding: 9px 12px;
+  border: 1px solid #dcdcdf;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  color: #14181d;
+}
+
+.nt__new:hover {
+  background: #f0f0f2;
+}
+
+.nt__side-label {
+  margin: 16px 0 6px;
+  padding: 0 8px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a8f95;
+  font-weight: 700;
+}
+
+.nt__recent {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  min-height: 0;
+  flex: 1;
+}
+
+.nt__recent li {
+  font-size: 13px;
+  color: #3c4249;
+  padding: 8px;
+  border-radius: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
+}
+
+.nt__recent li:hover {
+  background: #ececef;
+}
+
+.nt__account {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-top: 1px solid #e6e6e8;
+  padding-top: 10px;
+  font-size: 12px;
+  color: #3c4249;
+}
+
+.nt__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0f9d8f;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+.nt__plan {
+  color: #8a8f95;
+  font-size: 11px;
+}
+
+.nt__main {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #fff;
+}
+
+.nt__topbar {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f2;
+  flex: 0 0 auto;
+}
+
+.nt__model {
+  font-size: 14px;
+  font-weight: 700;
+  color: #14181d;
+}
+
+.nt__topbar-note {
+  font-size: 11.5px;
+  color: #8a8f95;
+}
+
+.nt__log {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 22px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.nt__empty {
+  margin: auto;
+  text-align: center;
+  max-width: 420px;
+  padding-bottom: 40px;
+}
+
+.nt__empty h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  color: #14181d;
+}
+
+.nt__empty p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #6b7178;
+}
+
+.nt__msg {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 78%;
+}
+
+.nt__msg--user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.nt__who {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8a8f95;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nt__bubble {
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 11px 14px;
+  border-radius: 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.nt__msg--user .nt__bubble {
+  background: #14181d;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.nt__msg--assistant .nt__bubble {
+  background: #f4f4f5;
+  color: #1b1f23;
+  border-bottom-left-radius: 4px;
+}
+
+.nt__bubble--busy {
+  color: #8a8f95;
+  font-style: italic;
+}
+
+.nt__composer {
+  margin: 0 20px;
+  border: 1px solid #dcdcdf;
+  border-radius: 14px;
+  padding: 8px 10px 8px 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  flex: 0 0 auto;
+}
+
+.nt__composer textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #14181d;
+  background: transparent;
+  max-height: 190px;
+}
+
+.nt__composer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+}
+
+.nt__attach {
+  color: #8a8f95;
+  font-size: 16px;
+}
+
+.nt__send {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: none;
+  background: #0f9d8f;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nt__send:disabled {
+  background: #cdd3d2;
+  cursor: not-allowed;
+}
+
+.nt__disclaimer {
+  margin: 8px 20px 12px;
+  text-align: center;
+  font-size: 11px;
+  color: #8a8f95;
+  flex: 0 0 auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Taskbar
+   --------------------------------------------------------------------------- */
+
+.desk__taskbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 6;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: rgba(20, 24, 38, 0.86);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+}
+
+.desk__start {
+  font-size: 19px;
+  color: #7fc9ff;
+}
+
+.desk__search {
+  width: 220px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12px;
+}
+
+.desk__pinned {
+  display: flex;
+  gap: 14px;
+  font-size: 17px;
+  margin-left: 6px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.desk__tray {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+}
+
+.desk__clock {
+  text-align: right;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   Presenter cues — never visible in the audience view
+   --------------------------------------------------------------------------- */
+
+.desk__cues {
+  flex: 0 0 auto;
+  background: #10151f;
+  border-top: 1px solid #2b3446;
+  padding: 10px 14px 12px;
+  color: #cfd6e2;
+  font-size: 12px;
+  max-height: 40vh;
+  overflow: auto;
+}
+
+.desk__cues-head {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.desk__cues-head strong {
+  color: #fff;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.desk__cues-head code,
+.desk__cues-head span {
+  font-size: 11.5px;
+  color: #93a0b5;
+}
+
+.desk__cue-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+}
+
+.desk__cue {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  font: inherit;
+  padding: 9px 11px;
+  border-radius: 7px;
+  border: 1px solid #2b3446;
+  background: #18202e;
+  color: #e6ecf5;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.desk__cue:hover {
+  border-color: #3f7fd4;
+  background: #1d2941;
+}
+
+.desk__cue strong {
+  font-size: 12.5px;
+}
+
+.desk__cue span {
+  font-size: 11px;
+  color: #93a0b5;
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive — the desktop still has to work on a laptop at 1280px
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .nt {
+    grid-template-columns: 1fr;
+  }
+  .nt__side {
+    display: none;
+  }
+  .desk__icons,
+  .desk__search,
+  .brw__bookmarks {
+    display: none;
+  }
+  .brw {
+    width: 100%;
+    height: calc(100% - 46px);
+    top: calc(50% - 23px);
+    border-radius: 0;
+  }
+  .nt__msg {
+    max-width: 92%;
+  }
+}
+
+/* Presenter-only one-liner under the desktop: which app and which mode. */
+.desk__status {
+  flex: 0 0 auto;
+  background: #10151f;
+  border-top: 1px solid #2b3446;
+  color: #93a0b5;
+  font-size: 11.5px;
+  padding: 6px 14px;
+}
+
+.desk__status code {
+  color: #cfd6e2;
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Plain "not sent" state.
+ *
+ * A public LLM cannot display a corporate block page, and inventing one reads as
+ * theatre. This is what a stopped submission actually looks like: a short message,
+ * a way out, and nothing about who stopped it.
+ * ------------------------------------------------------------------------ */
+
+.nt--stopped {
+  display: grid;
+  place-items: center;
+  padding: var(--space-8) var(--space-5);
+  height: 100%;
+}
+
+.nt__stopped-inner {
+  max-width: 26rem;
+  text-align: center;
+  color: #333;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+.nt__stopped-msg {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.nt__stopped-sub {
+  margin: 0 0 var(--space-4);
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.nt__stopped-mono {
+  margin: 0 0 var(--space-4);
+  font-size: 0.6875rem;
+  color: #8a8a8a;
+  word-break: break-word;
+}
+
+.nt__stopped-btn {
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.nt__stopped-btn:hover {
+  background: #f4f4f4;
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Inline notice: a message that did not go through.
+ *
+ * It sits in the thread like any other turn, because that is what a hosted chat
+ * service does when it cannot serve a request. No page takeover, no reference
+ * number, no security branding.
+ * ------------------------------------------------------------------------ */
+
+.nt__msg--notice .nt__bubble {
+  background: #fdf3f2;
+  border: 1px solid #e6c9c5;
+  color: #5a2420;
+}
+
+.nt__msg--notice .nt__who {
+  color: #a04a42;
+}
+
+.nt__link {
+  display: inline;
+  margin-top: 0.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #0b5fa5;
+  text-decoration: underline;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.nt__link:hover {
+  color: #084a80;
+}
+
+.nt__detect {
+  margin: 0.25rem 0 0;
+  font-size: 0.625rem;
+  color: #8a8a8a;
+}
+
+/* Help centre, rendered inside the same fake browser chrome. */
+.nt--help {
+  display: block;
+  padding: var(--space-7) var(--space-6);
+  background: #fff;
+}
+
+.nt__help {
+  max-width: 34rem;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  color: #222;
+}
+
+.nt__help h1 {
+  font-size: 1.375rem;
+  margin: 0 0 var(--space-4);
+}
+
+.nt__help p {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  margin: 0 0 var(--space-4);
+}

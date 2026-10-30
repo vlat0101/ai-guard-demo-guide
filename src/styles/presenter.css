@@ -1,0 +1,298 @@
+/**
+ * Presenter drawer.
+ *
+ * A roll-up panel pinned to the bottom-left. Collapsed it is a single handle;
+ * expanded it holds the suggested questions and the reasoning behind each one.
+ * It sits above the assistant dock in the stack, and never overlaps it: the
+ * handle is bottom-left, the dock is bottom-right.
+ *
+ * Presenter mode is bound to this drawer, so with it rolled up there is nothing
+ * on the page that suggests an inspection service exists.
+ */
+
+.pdrawer {
+  position: fixed;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 130;
+  max-width: min(860px, calc(100vw - var(--space-8)));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.pdrawer > * {
+  pointer-events: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Handle
+   --------------------------------------------------------------------------- */
+
+.pdrawer__handle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+  border: 1px solid var(--gov-grey-11);
+  background: var(--gov-navy);
+  color: var(--gov-white);
+  cursor: pointer;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--gov-navy) 30%, transparent);
+  order: 2;
+}
+
+.pdrawer__handle:hover {
+  background: color-mix(in srgb, var(--gov-white) 12%, var(--gov-navy));
+}
+
+.pdrawer--open .pdrawer__handle {
+  background: var(--gov-grey-11);
+}
+
+.pdrawer__chev {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.pdrawer__handle-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40vw;
+}
+
+/* ---------------------------------------------------------------------------
+   Panel
+   --------------------------------------------------------------------------- */
+
+.pdrawer__panel {
+  order: 1;
+  width: 100%;
+  max-height: min(52vh, 480px);
+  overflow: auto;
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--gov-navy) 26%, transparent);
+  padding: var(--space-4) var(--space-5) var(--space-3);
+}
+
+.pdrawer__panel[hidden] {
+  display: none;
+}
+
+.pdrawer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-3);
+}
+
+.pdrawer__head h2 {
+  margin: 0 0 var(--space-1);
+  font-size: var(--fs-base);
+}
+
+.pdrawer__for {
+  font-weight: 400;
+  color: var(--muted-foreground);
+  font-size: var(--fs-sm);
+}
+
+.pdrawer__head p {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.pdrawer__close {
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--gov-grey-04);
+  color: var(--gov-grey-11);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.pdrawer__close:hover {
+  background: var(--gov-grey-1);
+}
+
+/* ---------------------------------------------------------------------------
+   Cues
+   --------------------------------------------------------------------------- */
+
+.pdrawer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-2);
+}
+
+.pdrawer__cue {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font: inherit;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--gov-white);
+  cursor: pointer;
+  color: inherit;
+}
+
+.pdrawer__cue:hover {
+  background: var(--accent-tint);
+  border-left-color: var(--gov-orange);
+}
+
+.pdrawer__cue-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.pdrawer__cue-note {
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+  line-height: 1.45;
+}
+
+.pdrawer__cue-text {
+  margin-top: var(--space-1);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--gov-grey-11);
+  font-family: var(--font-mono, monospace);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.72;
+}
+
+.pdrawer__foot {
+  margin: var(--space-3) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.pdrawer__foot p {
+  margin: 0;
+  max-width: 62ch;
+  line-height: 1.5;
+}
+
+/* Operator links live here rather than in the site footer: they are for the
+   person driving the demo, not for the customer reading the site. */
+.pdrawer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-weight: 700;
+}
+
+.pdrawer__nav a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.pdrawer__nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   Small screens — the panel takes the width it can get
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .pdrawer {
+    left: var(--space-2);
+    right: var(--space-2);
+    max-width: none;
+  }
+
+  .pdrawer__panel {
+    max-height: 46vh;
+    padding: var(--space-3);
+  }
+
+  .pdrawer__list {
+    grid-template-columns: 1fr;
+  }
+
+  .pdrawer__handle-label {
+    max-width: 60vw;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Inline variant — used by the shadow-AI desktop, which is a full-viewport
+   surface with a taskbar at the bottom. A floating drawer would land on top of
+   the taskbar, so there it sits in the flow and rolls up to a single handle.
+   --------------------------------------------------------------------------- */
+
+.pdrawer--inline {
+  position: static;
+  max-width: none;
+  align-items: stretch;
+  padding: 0 var(--space-4) var(--space-3);
+  gap: var(--space-2);
+}
+
+.pdrawer--inline .pdrawer__handle {
+  align-self: flex-start;
+}
+
+.pdrawer--inline .pdrawer__panel {
+  max-height: min(42vh, 400px);
+}
+
+@media (max-width: 760px) {
+  .pdrawer--inline {
+    padding: 0 var(--space-2) var(--space-2);
+  }
+}
+
+
+/* Detector string in the presenter strip. Allowed to wrap — it is operator detail, and
+   truncating "pattern, CRITICAL" to "pat…" helps nobody. */
+.verdict__reason {
+  flex-basis: 100%;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  word-break: break-word;
+}

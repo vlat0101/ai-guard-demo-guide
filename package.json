@@ -1,0 +1,30 @@
+{
+  "name": "ai-guard-demo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "npm run deploy:pre && npm run verify:pre && npm run deploy:prod",
+    "typecheck": "tsc --noEmit",
+    "db:init": "wrangler d1 execute ai-guard-demo --file=./migrations/0001_decisions.sql",
+    "deploy:pre": "vite build && wrangler deploy --env preview --tag $(git rev-parse --short HEAD)",
+    "verify:pre": "bash tools/verify-pre.sh",
+    "deploy:prod": "node scripts/deploy-prod.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261019.1",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9",
+    "wrangler": "^4.0.0"
+  }
+}

@@ -1,0 +1,127 @@
+name = "ai-guard-demo"
+main = "worker/index.ts"
+compatibility_date = "2026-10-01"
+
+# Static SPA (built by Vite) served from the same Worker as the API routes.
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ai-guard-demo"
+database_id = "REPLACE_WITH_YOUR_PROD_D1_ID"
+
+# Deployed version id + commit tag, so the UI can say WHICH build it is.
+# `wrangler deploy` populates it; `wrangler dev` leaves it empty and the banner
+# falls back to "dev".
+[version_metadata]
+binding = "CF_VERSION_METADATA"
+
+[vars]
+ENVIRONMENT = "production"
+# Instruction-following matters more than latency here: llama-3.1-8b refuses and
+# hedges on the very prompts the demo needs it to answer, which makes AI Guard look
+# like the thing refusing. Measured: 3.3-70b discloses, 3.1-8b editorialises.
+LLM_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+# Guarded path selection: "das" | "proxy" | "auto" (default).
+#   das   -> AI Guard Detection API; the app calls the model and enforces the verdict
+#   proxy -> AI Guard inline reverse proxy; AI Guard enforces
+#   auto  -> das when a DAS key is present, else proxy when a proxy key is, else none
+AI_GUARD_MODE = "auto"
+
+# Per-application policy ids. Keys must match AI Guard → AI Applications exactly.
+# Three surfaces: the two public sites, and the shadow-AI desktop.
+# Policy 1004 (dro-staff) is unused since the staff portals were removed; leave it out
+# rather than mapping an appId that no longer exists in the code.
+AI_GUARD_POLICY_IDS = '{"dro-public":1001,"mtdis-public":1002,"mtdis-staff":1003}'
+
+# Shared-password gate for the whole estate. Rotated between customers.
+DEMO_REQUIRE_AUTH = "true"
+
+# false = control instructions live only in AI Guard (clean single-variable A/B)
+# true  = also appended to the app system prompt (defence in depth)
+PROMPT_HARDENING = "false"
+
+# Operator console detail. Stores the prompt and the model's answer against each
+# interaction so a decision can be shown with what produced it. Demo estate only:
+# the content is fictional, and this is the setting that would be off in production.
+CAPTURE_CONTENT = "true"
+
+[ai]
+binding = "AI"
+
+[observability]
+enabled = true
+
+# ---------------------------------------------------------------------------
+# PREVIEW — the pre-deployment environment.
+#
+# A separate Worker, a separate D1 database and a separate set of AI Guard
+# policies, so changing a policy or clicking through a half-built feature cannot
+# touch what a customer is being shown on demo.example.com.
+#
+# Everything here is DELIBERATELY repeated rather than inherited: Cloudflare does
+# not inherit vars, bindings, assets or secrets into an env block, and an env block
+# carrying only a `name` deploys a Worker that cannot chat, cannot record and serves
+# no SPA — which is exactly what this section was before.
+#
+# Secrets are per-env too: `npx wrangler secret put AUTH_SECRET --env preview`.
+# Test on:   https://pre-demo.example.com
+# Promote:   npm run deploy:prod   (refuses while the pre audit is red or stale)
+# ---------------------------------------------------------------------------
+[env.preview]
+name = "ai-guard-demo-preview"
+
+[env.preview.assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "ai-guard-demo-preview"
+database_id = "REPLACE_WITH_YOUR_PREVIEW_D1_ID"
+
+[env.preview.version_metadata]
+binding = "CF_VERSION_METADATA"
+
+[env.preview.vars]
+ENVIRONMENT = "preview"
+# MUST match production's model. The response-side cues fire on what the MODEL writes, so a
+# preview running a different model passes and fails a different set of cues than production
+# would — measured 2026-10-22: granite failed 3 as false-negatives where the 70B fails 3
+# differently, and the 8B over-blocked two benign answers. A gate on a different model
+# validates something the customer never sees. Model choice is therefore a both-environments
+# decision; see docs/model-selection.md.
+LLM_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+AI_GUARD_MODE = "auto"
+# The PRE clone of each policy. Tuning happens here; the production ids never appear
+# in this block, so a preview deploy cannot enforce against a customer-facing policy.
+# Clones created 2026-10-21 from 1001/1002/1003 by tools/clone_policy.py — originals
+# backed up to docs/policy-backup-20261021-221733-*.json.
+AI_GUARD_POLICY_IDS = '{"dro-public":1011,"mtdis-public":1012,"mtdis-staff":1013}'
+DEMO_REQUIRE_AUTH = "true"
+PROMPT_HARDENING = "false"
+CAPTURE_CONTENT = "true"
+
+[env.preview.ai]
+binding = "AI"
+
+[env.preview.observability]
+enabled = true
+
+# Managed here so a deploy owns it. The production hostname was attached out of band
+# and is still not in this file (review finding 20).
+#
+# The demo is shared with people behind Zscaler, where example.com is isolated by browser
+# isolation and example.com is not. The Worker therefore answers on both: example.com
+# is the address to hand out, example.com stays attached so existing links do not break.
+[[env.preview.routes]]
+pattern = "pre-demo.example.com"
+custom_domain = true
+
+[[env.preview.routes]]
+pattern = "pre-demo.example.com"
+custom_domain = true

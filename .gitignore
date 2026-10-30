@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+.wrangler/
+worker-configuration.d.ts
+
+# secrets — never commit
+.env
+.env.*
+!.env.example
+.dev.vars
+*.pem
+*.key
+.wrangler/state/
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# logs
+*.log
+npm-debug.log*
+
+# python bytecode from tools/
+__pycache__/
+*.pyc
+
+# pre-deploy verification receipt + audit logs (regenerate with npm run verify:pre)
+.pre-verify.json
+.pre-cue.log
+.pre-adversarial.log

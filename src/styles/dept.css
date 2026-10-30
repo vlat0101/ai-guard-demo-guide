@@ -1,0 +1,858 @@
+/**
+ * Government department layout.
+ *
+ * A different agency, not a reskin of the health service: sharper geometry, navy
+ * rather than teal, a split hero rather than a photographic one, and a
+ * "I want to" task list in place of quick-action tiles.
+ *
+ * Colour comes only from the shared palette in tokens.css.
+ */
+
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
+
+.dp-header {
+  background: var(--gov-white);
+  border-bottom: 3px solid var(--accent);
+}
+
+.dp-utility {
+  background: var(--gov-navy);
+}
+
+.dp-utility__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-5);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.dp-utility nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.dp-utility a {
+  font-size: var(--fs-xs);
+  color: color-mix(in srgb, var(--gov-white) 85%, transparent);
+  text-decoration: none;
+}
+
+.dp-utility a:hover {
+  color: var(--gov-white);
+  text-decoration: underline;
+}
+
+.dp-brand__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.dp-brand__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+  flex: 0 0 auto;
+}
+
+.dp-brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.dp-brand__name {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+
+.dp-brand__abbr {
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 3px;
+}
+
+.dp-search {
+  margin-left: auto;
+  flex: 1 1 320px;
+  max-width: 420px;
+}
+
+.dp-search__label {
+  display: block;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted-foreground);
+  margin-bottom: var(--space-1);
+}
+
+.dp-search__row {
+  display: flex;
+}
+
+.dp-search input {
+  flex: 1;
+  font: inherit;
+  font-size: var(--fs-sm);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--gov-grey-11);
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  background: var(--gov-white);
+  color: var(--foreground);
+  min-width: 0;
+}
+
+.dp-search input:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 0;
+}
+
+.dp-search button {
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent);
+  color: var(--gov-white);
+  border: 2px solid var(--accent);
+  border-radius: 0 2px 2px 0;
+  cursor: pointer;
+}
+
+.dp-search button:hover {
+  background: color-mix(in srgb, var(--gov-black) 15%, var(--accent));
+}
+
+.dp-menu-toggle {
+  display: none;
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-4);
+  background: var(--gov-grey-04);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.dp-nav {
+  background: var(--gov-grey-04);
+  border-top: 1px solid var(--border);
+}
+
+.dp-nav__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dp-nav a {
+  display: block;
+  padding: var(--space-3) var(--space-4);
+  color: var(--gov-navy);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  border-bottom: 3px solid transparent;
+}
+
+.dp-nav a:hover {
+  border-bottom-color: var(--gov-orange);
+  background: var(--gov-grey-1);
+}
+
+.dp-nav a[aria-current='page'] {
+  border-bottom-color: var(--accent);
+  background: var(--gov-white);
+}
+
+.dp-notice {
+  background: var(--gov-orange-08);
+  border-bottom: 1px solid color-mix(in srgb, var(--gov-orange) 40%, white);
+}
+
+.dp-notice__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  align-items: baseline;
+  font-size: var(--fs-sm);
+  color: var(--gov-grey-11);
+}
+
+.dp-notice__inner strong {
+  color: var(--gov-navy);
+}
+
+.dp-notice a {
+  color: var(--gov-navy);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------------------
+   Main
+   --------------------------------------------------------------------------- */
+
+.dp-main {
+  max-width: none;
+  padding: 0;
+}
+
+.dp-prose {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5);
+}
+
+.dp-prose h1 {
+  margin-top: 0;
+}
+
+.dp-section {
+  padding: var(--space-7) var(--space-5);
+}
+
+.dp-section--tint {
+  background: var(--gov-grey-04);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.dp-section__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.dp-section__title {
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--space-5);
+  letter-spacing: -0.015em;
+}
+
+.dp-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.dp-section__head .dp-section__title {
+  margin-bottom: 0;
+}
+
+.dp-section__link {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------------------
+   Split hero — text panel beside image, unlike the health site's photo hero
+   --------------------------------------------------------------------------- */
+
+.dp-hero {
+  background: var(--gov-navy);
+  border-bottom: 5px solid var(--gov-teal);
+}
+
+.dp-hero__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+}
+
+.dp-hero__text {
+  padding: var(--space-8) var(--space-5) var(--space-8) var(--space-5);
+  color: var(--gov-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.dp-hero__eyebrow {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--gov-teal);
+  margin: 0 0 var(--space-3);
+}
+
+.dp-hero h1 {
+  font-size: var(--fs-2xl);
+  line-height: 1.18;
+  margin: 0 0 var(--space-4);
+  letter-spacing: -0.02em;
+  color: var(--gov-white);
+  max-width: 20ch;
+}
+
+.dp-hero__lede {
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  margin: 0 0 var(--space-6);
+  max-width: 48ch;
+  color: color-mix(in srgb, var(--gov-white) 90%, transparent);
+}
+
+.dp-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.dp-hero .btn--primary {
+  background: var(--gov-teal);
+  border-color: var(--gov-teal);
+  color: var(--gov-navy);
+}
+
+.dp-hero .btn--ghost {
+  border-color: var(--gov-white);
+  color: var(--gov-white);
+  background: transparent;
+}
+
+.dp-hero .btn--ghost:hover {
+  background: var(--gov-white);
+  color: var(--gov-navy);
+}
+
+.dp-hero__media {
+  position: relative;
+  min-height: 380px;
+}
+
+.dp-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.dp-hero__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--gov-navy) 82%, transparent);
+  color: var(--gov-white);
+  font-size: var(--fs-xs);
+  padding: var(--space-3) var(--space-4);
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
+   "I want to" task list
+   --------------------------------------------------------------------------- */
+
+.dp-tasks {
+  padding: var(--space-6) var(--space-5);
+  background: var(--gov-white);
+  border-bottom: 1px solid var(--border);
+}
+
+.dp-tasks__inner {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.dp-tasks__title {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted-foreground);
+  margin: 0 0 var(--space-4);
+}
+
+.dp-tasks__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.dp-tasks__list a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'label arrow' 'hint arrow';
+  gap: 0 var(--space-3);
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--gov-white);
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.dp-tasks__list a:hover {
+  background: var(--accent-tint);
+}
+
+.dp-tasks__label {
+  grid-area: label;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--gov-navy);
+}
+
+.dp-tasks__hint {
+  grid-area: hint;
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+}
+
+.dp-tasks__arrow {
+  grid-area: arrow;
+  color: var(--gov-teal);
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------------------
+   Role cards
+   --------------------------------------------------------------------------- */
+
+.dp-roles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.dp-role {
+  border-top: 4px solid var(--accent);
+  background: var(--gov-grey-04);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dp-role__icon {
+  color: var(--accent);
+  display: inline-flex;
+}
+
+.dp-role h3 {
+  margin: 0;
+  font-size: var(--fs-md);
+}
+
+.dp-role p {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--gov-grey-11);
+}
+
+.dp-role__link {
+  margin-top: auto;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Consultations + stat
+   --------------------------------------------------------------------------- */
+
+.dp-split {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.dp-consult {
+  background: var(--gov-white);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--gov-teal);
+  padding: var(--space-5);
+}
+
+.dp-consult__badge {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gov-white);
+  background: var(--accent);
+  padding: 0.25em 0.6em;
+}
+
+.dp-consult h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-md);
+}
+
+.dp-consult__closes {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--gov-red);
+}
+
+.dp-consult p {
+  margin-top: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+}
+
+.dp-consult .btn {
+  margin-top: var(--space-2);
+}
+
+.dp-consult__list {
+  list-style: none;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.dp-consult__list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+
+.dp-consult__closed {
+  color: var(--muted-foreground);
+  font-size: var(--fs-xs);
+}
+
+.dp-split__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dp-stat {
+  background: var(--gov-navy);
+  color: var(--gov-white);
+  padding: var(--space-5);
+}
+
+.dp-stat__label {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gov-teal);
+  font-weight: 700;
+}
+
+.dp-stat__value {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dp-stat__note {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--gov-white) 78%, transparent);
+}
+
+.dp-split__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------------------
+   News
+   --------------------------------------------------------------------------- */
+
+.dp-news {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.dp-news__item {
+  border-top: 3px solid var(--gov-orange);
+  background: var(--gov-white);
+  padding: var(--space-4);
+}
+
+.dp-news__kind {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.dp-news__item h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-base);
+  line-height: 1.35;
+}
+
+.dp-news__date {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+}
+
+.dp-news__item p:last-child {
+  margin-bottom: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+}
+
+/* ---------------------------------------------------------------------------
+   Publications band
+   --------------------------------------------------------------------------- */
+
+.dp-band {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  background: var(--gov-grey-04);
+  border-top: 1px solid var(--border);
+}
+
+.dp-band__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-height: 320px;
+}
+
+.dp-band__text {
+  padding: var(--space-7) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.dp-band__text h2 {
+  margin: 0;
+  font-size: var(--fs-xl);
+}
+
+.dp-band__text p {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--gov-grey-11);
+  max-width: 56ch;
+}
+
+.dp-band__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.dp-band__list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+
+.dp-band__list li > span:first-child {
+  font-weight: 700;
+}
+
+.dp-band__meta {
+  font-size: var(--fs-xs);
+  color: var(--muted-foreground);
+}
+
+.dp-band .btn {
+  align-self: flex-start;
+}
+
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
+.dp-footer {
+  background: var(--gov-navy);
+  color: var(--gov-white);
+}
+
+.dp-footer__cols {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-5);
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.dp-footer__col--org {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+}
+
+.dp-footer__col--org strong {
+  font-size: var(--fs-sm);
+  max-width: 22ch;
+}
+
+.dp-footer__col--org span,
+.dp-footer__col--org a {
+  color: color-mix(in srgb, var(--gov-white) 75%, transparent);
+  font-size: var(--fs-xs);
+  text-decoration: none;
+}
+
+.dp-footer__col--org a:hover {
+  color: var(--gov-white);
+  text-decoration: underline;
+}
+
+.dp-footer__col h2 {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--gov-teal);
+  margin: 0 0 var(--space-4);
+}
+
+.dp-footer__col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dp-footer__col a {
+  color: color-mix(in srgb, var(--gov-white) 85%, transparent);
+  text-decoration: none;
+  font-size: var(--fs-sm);
+}
+
+.dp-footer__col a:hover {
+  color: var(--gov-white);
+  text-decoration: underline;
+}
+
+.dp-ack {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.dp-ack p {
+  margin: 0;
+  padding: var(--space-4);
+  border-left: 3px solid var(--gov-teal);
+  background: color-mix(in srgb, var(--gov-white) 7%, transparent);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--gov-white) 88%, transparent);
+}
+
+.dp-ack strong {
+  color: var(--gov-white);
+}
+
+.dp-footer__base {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5) var(--space-6);
+  border-top: 1px solid color-mix(in srgb, var(--gov-white) 18%, transparent);
+}
+
+.dp-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: baseline;
+  font-size: var(--fs-xs);
+  margin-bottom: var(--space-3);
+}
+
+.dp-footer__legal a {
+  color: color-mix(in srgb, var(--gov-white) 85%, transparent);
+}
+
+.dp-footer__disclaimer {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--gov-white) 62%, transparent);
+  max-width: 95ch;
+}
+
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .dp-hero__inner { grid-template-columns: 1fr; }
+  .dp-hero__media { min-height: 260px; position: relative; }
+  .dp-tasks__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dp-roles { grid-template-columns: 1fr; }
+  .dp-split { grid-template-columns: 1fr; }
+  .dp-news { grid-template-columns: 1fr; }
+  .dp-band { grid-template-columns: 1fr; }
+  .dp-band__media img { min-height: 220px; max-height: 260px; }
+  .dp-footer__cols { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 760px) {
+  .dp-menu-toggle { display: inline-block; margin-left: auto; }
+  .dp-search { order: 3; flex-basis: 100%; max-width: none; margin-left: 0; }
+  .dp-brand__inner { flex-wrap: wrap; }
+  .dp-nav { display: none; }
+  .dp-nav--open { display: block; }
+  .dp-nav__inner { flex-direction: column; padding: 0; }
+  .dp-nav a { padding: var(--space-3) var(--space-5); border-bottom: 1px solid var(--border); }
+  .dp-tasks__list { grid-template-columns: 1fr; }
+  .dp-hero h1 { font-size: var(--fs-xl); }
+  .dp-footer__cols { grid-template-columns: 1fr; }
+  .dp-utility__inner { justify-content: flex-start; }
+  .dp-utility nav { gap: var(--space-3); }
+}

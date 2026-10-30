@@ -1,0 +1,107 @@
+{
+  "id": 1003,
+  "name": "desktop",
+  "version": 17,
+  "inputDetectorPolicies": [
+    {
+      "detector": "personal_data",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "action": "BLOCK",
+        "threshold": 0.3
+      }
+    },
+    {
+      "detector": "prompt_injection",
+      "enabled": true,
+      "severity": "CRITICAL",
+      "configuration": {
+        "action": "BLOCK",
+        "threshold": 0.8
+      }
+    },
+    {
+      "detector": "malicious_url",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "action": "BLOCK"
+      }
+    },
+    {
+      "detector": "invisible_text",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "BLOCK"
+      }
+    },
+    {
+      "detector": "legal_advice",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "BLOCK",
+        "threshold": 0.86
+      }
+    },
+    {
+      "detector": "gibberish",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "DETECT",
+        "threshold": 0.9
+      }
+    },
+    {
+      "detector": "finance_advice",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "DETECT",
+        "threshold": 0.6
+      }
+    },
+    {
+      "detector": "pattern",
+      "enabled": true,
+      "severity": "CRITICAL",
+      "configuration": {
+        "defaultAction": "ALLOW",
+        "regexPatterns": [
+          {
+            "name": "MRN",
+            "action": "BLOCK",
+            "pattern": "\\bMRN\\b[^\\d]{0,40}\\d{6,8}\\b"
+          },
+          {
+            "name": "Medical Record Number",
+            "action": "BLOCK",
+            "pattern": "\\b[Mm]edical [Rr]ecord [Nn]umber\\b[^\\d]{0,20}\\d{6,8}\\b"
+          },
+          {
+            "name": "Staff mobile",
+            "action": "BLOCK",
+            "pattern": "\\b04\\d{2}\\s?\\d{3}\\s?\\d{3}\\b"
+          },
+          {
+            "name": "Staff roster",
+            "action": "BLOCK",
+            "pattern": "\\b[Ss]taff [Rr]oster\\b"
+          },
+          {
+            "name": "Nurse unit manager",
+            "action": "BLOCK",
+            "pattern": "\\b[Nn]urse [Uu]nit [Mm]anager\\b"
+          }
+        ]
+      }
+    }
+  ],
+  "outputDetectorPolicies": [],
+  "description": "Virtual desktop for Chat Bot demo",
+  "createTimeMillis": 1792472338495,
+  "updateTimeMillis": 1792549057639
+}

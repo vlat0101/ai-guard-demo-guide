@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Government palette.
+
+   A standard Australian government colour palette, expressed in the hex values
+   the published style guides use so the demo reads as a government service
+   without imitating any particular one.
+
+   This demo is not an authorised government product. It uses colour and layout
+   conventions only — deliberately NOT any government logo, badge, coat of arms,
+   official device or licensed typeface.
+   ========================================================================== */
+
+:root {
+  /* Primary palette */
+  --gov-navy: #201547;      /* PMS 2765 C  */
+  --gov-blue: #004c97;      /* PMS 2945 C  */
+  --gov-teal: #00b2a9;      /* PMS 326 C   */
+  --gov-orange: #ff9e1b;    /* PMS 1375 C  */
+  --gov-red: #af272f;       /* PMS 1805 C  */
+  --gov-purple: #87189d;    /* PMS 2602 C  */
+  --gov-grey-11: #53565a;   /* PMS Cool Grey 11 C */
+  --gov-grey-1: #d9d9d6;    /* PMS Cool Grey 1 C  */
+  --gov-black: #000000;
+  --gov-white: #ffffff;
+
+  /* Tints are permitted only as a percentage of the exact breakdown, so these
+     are computed mixes rather than invented colours. */
+  --gov-navy-08: color-mix(in srgb, var(--gov-navy) 8%, white);
+  --gov-blue-08: color-mix(in srgb, var(--gov-blue) 8%, white);
+  --gov-teal-08: color-mix(in srgb, var(--gov-teal) 8%, white);
+  --gov-orange-08: color-mix(in srgb, var(--gov-orange) 8%, white);
+  --gov-red-08: color-mix(in srgb, var(--gov-red) 8%, white);
+  --gov-grey-04: color-mix(in srgb, var(--gov-grey-1) 40%, white);
+
+  /* Type — Arial is the guidelines' nominated substitute where VIC is not
+     available, which is exactly our licensing position. */
+  --font-sans: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.25rem;
+  --fs-3xl: 3rem;
+
+  --lh-tight: 1.25;
+  --lh-normal: 1.55;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  --radius: 2px;
+  --radius-lg: 4px;
+
+  /* Per-site accent, overridden by .theme-* below. */
+  --accent: var(--gov-blue);
+  --accent-tint: var(--gov-blue-08);
+
+  --border: #d3d3cf;
+  --border-strong: #a8a8a3;
+  --text: #1a1a1a;
+  --text-muted: var(--gov-grey-11);
+
+  --ok: #1f7a3d;
+  --warn: #8a5a00;
+  --bad: var(--gov-red);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.14);
+}
+
+/* Department — understated navy. The department does not do cheerful. */
+.theme-dro {
+  --accent: var(--gov-navy);
+  --accent-tint: var(--gov-navy-08);
+}
+
+/* Health service — teal, the palette's health-adjacent primary. */
+.theme-mountdis {
+  /* Deep teal mixed from two palette colours, not a new brand colour. */
+  --accent: color-mix(in srgb, var(--gov-teal) 55%, var(--gov-navy));
+  --accent-tint: var(--gov-teal-08);
+}
+
+/* Operator console — carries the health service's teal.
+   The console is the control plane for the site being demoed, so it should read as
+   part of the same estate rather than as an unrelated dark tool. The dark surround
+   still keeps it from being mistaken for a public site. */
+.theme-console {
+  --accent: color-mix(in srgb, var(--gov-teal) 55%, var(--gov-navy));
+  --accent-tint: var(--gov-teal-08);
+}

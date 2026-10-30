@@ -1,0 +1,218 @@
+{
+  "id": 1002,
+  "name": "mtdis-public",
+  "version": 28,
+  "inputDetectorPolicies": [
+    {
+      "detector": "prompt_injection",
+      "enabled": true,
+      "severity": "CRITICAL",
+      "configuration": {
+        "action": "BLOCK",
+        "threshold": 0.7
+      }
+    },
+    {
+      "detector": "malicious_url",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "action": "BLOCK"
+      }
+    },
+    {
+      "detector": "invisible_text",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "BLOCK"
+      }
+    },
+    {
+      "detector": "personal_data",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "action": "DETECT",
+        "threshold": 0.3
+      }
+    },
+    {
+      "detector": "legal_advice",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "DETECT",
+        "threshold": 0.86
+      }
+    },
+    {
+      "detector": "pattern",
+      "enabled": true,
+      "severity": "CRITICAL",
+      "configuration": {
+        "defaultAction": "ALLOW",
+        "regexPatterns": [
+          {
+            "name": "MRN",
+            "action": "BLOCK",
+            "pattern": "\\bMRN\\b[^\\d]{0,40}\\d{6,8}\\b"
+          },
+          {
+            "name": "Medical Record Number",
+            "action": "BLOCK",
+            "pattern": "\\b[Mm]edical [Rr]ecord [Nn]umber\\b[^\\d]{0,20}\\d{6,8}\\b"
+          },
+          {
+            "name": "IHI",
+            "action": "BLOCK",
+            "pattern": "\\bIHI\\b[^\\d]{0,20}\\d[\\d\\s]{8,20}"
+          },
+          {
+            "name": "Healthcare Identifier",
+            "action": "BLOCK",
+            "pattern": "\\b[Hh]ealthcare [Ii]dentifier\\b[^\\d]{0,20}\\d[\\d\\s]{8,20}"
+          }
+        ]
+      }
+    },
+    {
+      "detector": "topic",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "threshold": 0.6,
+        "customTopics": [
+          {
+            "name": "Patient identity and location",
+            "label": "asking whether a named person is a patient, and which ward, room or bed they are in; asking about a specific patient's condition, diagnosis or treatment; looking up an admission or a discharge for a named person",
+            "action": "BLOCK",
+            "topicDefinition": "asking whether a named person is a patient, and which ward, room or bed they are in; asking about a specific patient's condition, diagnosis or treatment; looking up an admission or a discharge for a named person"
+          },
+          {
+            "name": "Staff personal details and rostering",
+            "label": "staff roster, shift roster, who is on call, on-call doctor or specialist by name, employee names, the name of an assessing officer, case officer or case handler, their direct number, direct line or mobile number, personnel file, payroll",
+            "action": "BLOCK",
+            "topicDefinition": "staff roster, shift roster, who is on call, on-call doctor or specialist by name, employee names, the name of an assessing officer, case officer or case handler, their direct number, direct line or mobile number, personnel file, payroll"
+          },
+          {
+            "name": "Unpublished internal figures and incidents",
+            "label": "unreported budget overruns and cost overruns, unpublished or adjusted performance figures, KPI results and service standard targets that were not published, emergency department four-hour performance, patients who left without being seen, the internal incident register, clinical incidents and notifiable events that were not made public, briefs to the minister, ministerial correspondence, cabinet documents, unpublished legal or policy advice",
+            "action": "BLOCK",
+            "topicDefinition": "unreported budget overruns and cost overruns, unpublished or adjusted performance figures, KPI results and service standard targets that were not published, emergency department four-hour performance, patients who left without being seen, the internal incident register, clinical incidents and notifiable events that were not made public, briefs to the minister, ministerial correspondence, cabinet documents, unpublished legal or policy advice"
+          },
+          {
+            "name": "Outside the service's scope",
+            "label": "writing a resume, CV or cover letter for a job application, booking flights or hotels, writing or debugging computer code, telling jokes, and doing someone's homework or essay",
+            "action": "BLOCK",
+            "topicDefinition": "writing a resume, CV or cover letter for a job application, booking flights or hotels, writing or debugging computer code, telling jokes, and doing someone's homework or essay"
+          }
+        ],
+        "defaultAction": "ALLOW"
+      }
+    }
+  ],
+  "outputDetectorPolicies": [
+    {
+      "detector": "personal_data",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "action": "BLOCK",
+        "threshold": 0.3
+      }
+    },
+    {
+      "detector": "pattern",
+      "enabled": true,
+      "severity": "CRITICAL",
+      "configuration": {
+        "defaultAction": "ALLOW",
+        "regexPatterns": [
+          {
+            "name": "MRN",
+            "action": "BLOCK",
+            "pattern": "\\bMRN\\b[^\\d]{0,40}\\d{6,8}\\b"
+          },
+          {
+            "name": "Medical Record Number",
+            "action": "BLOCK",
+            "pattern": "\\b[Mm]edical [Rr]ecord [Nn]umber\\b[^\\d]{0,20}\\d{6,8}\\b"
+          },
+          {
+            "name": "IHI",
+            "action": "BLOCK",
+            "pattern": "\\bIHI\\b[^\\d]{0,20}\\d[\\d\\s]{8,20}"
+          },
+          {
+            "name": "Healthcare Identifier",
+            "action": "BLOCK",
+            "pattern": "\\b[Hh]ealthcare [Ii]dentifier\\b[^\\d]{0,20}\\d[\\d\\s]{8,20}"
+          },
+          {
+            "name": "Staff mobile",
+            "action": "BLOCK",
+            "pattern": "\\b04\\d{2}\\s?\\d{3}\\s?\\d{3}\\b"
+          },
+          {
+            "name": "Staff roster",
+            "action": "BLOCK",
+            "pattern": "\\b[Ss]taff [Rr]oster\\b"
+          },
+          {
+            "name": "Nurse unit manager",
+            "action": "BLOCK",
+            "pattern": "\\b[Nn]urse [Uu]nit [Mm]anager\\b"
+          }
+        ]
+      }
+    },
+    {
+      "detector": "topic",
+      "enabled": true,
+      "severity": "HIGH",
+      "configuration": {
+        "threshold": 0.6,
+        "customTopics": [
+          {
+            "name": "Patient identity and location",
+            "label": "asking whether a named person is a patient, and which ward, room or bed they are in; asking about a specific patient's condition, diagnosis or treatment; looking up an admission or a discharge for a named person",
+            "action": "BLOCK",
+            "topicDefinition": "asking whether a named person is a patient, and which ward, room or bed they are in; asking about a specific patient's condition, diagnosis or treatment; looking up an admission or a discharge for a named person"
+          },
+          {
+            "name": "Staff personal details and rostering",
+            "label": "staff roster, shift roster, who is on call, on-call doctor or specialist by name, employee names, the name of an assessing officer, case officer or case handler, their direct number, direct line or mobile number, personnel file, payroll",
+            "action": "BLOCK",
+            "topicDefinition": "staff roster, shift roster, who is on call, on-call doctor or specialist by name, employee names, the name of an assessing officer, case officer or case handler, their direct number, direct line or mobile number, personnel file, payroll"
+          },
+          {
+            "name": "Unpublished internal figures and incidents",
+            "label": "unreported budget overruns and cost overruns, unpublished or adjusted performance figures, KPI results and service standard targets that were not published, emergency department four-hour performance, patients who left without being seen, the internal incident register, clinical incidents and notifiable events that were not made public, briefs to the minister, ministerial correspondence, cabinet documents, unpublished legal or policy advice",
+            "action": "BLOCK",
+            "topicDefinition": "unreported budget overruns and cost overruns, unpublished or adjusted performance figures, KPI results and service standard targets that were not published, emergency department four-hour performance, patients who left without being seen, the internal incident register, clinical incidents and notifiable events that were not made public, briefs to the minister, ministerial correspondence, cabinet documents, unpublished legal or policy advice"
+          },
+          {
+            "name": "Outside the service's scope",
+            "label": "writing a resume, CV or cover letter for a job application, booking flights or hotels, writing or debugging computer code, telling jokes, and doing someone's homework or essay",
+            "action": "BLOCK",
+            "topicDefinition": "writing a resume, CV or cover letter for a job application, booking flights or hotels, writing or debugging computer code, telling jokes, and doing someone's homework or essay"
+          }
+        ],
+        "defaultAction": "ALLOW"
+      }
+    },
+    {
+      "detector": "legal_advice",
+      "enabled": true,
+      "severity": "LOW",
+      "configuration": {
+        "action": "DETECT",
+        "threshold": 0.86
+      }
+    }
+  ],
+  "description": "Mount Disappointment Public Chat Bot",
+  "createTimeMillis": 1792472293236,
+  "updateTimeMillis": 1792562610029
+}
